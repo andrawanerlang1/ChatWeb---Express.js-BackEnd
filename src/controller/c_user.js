@@ -52,36 +52,13 @@ module.exports = {
   editUser: async (request, response) => {
     try {
       const { id } = request.params;
-      const {
-        // user_name,
-        user_email,
-        user_display_name,
-        user_first_name,
-        user_last_name,
-        user_number,
-        user_address,
-        user_gender,
-        user_birthday,
-        // user_password,
-        // user_role,
-        // status
-      } = request.body;
-      // const salt = bcrypt.genSaltSync(10)
-      // const encryptPassword = bcrypt.hashSync(user_password, salt)
+      const { user_name, user_email, user_number, user_bio } = request.body;
       const setData = {
-        // user_name,
+        user_name,
         user_email,
-        user_display_name,
-        user_first_name,
-        user_last_name,
         user_number,
-        user_address,
-        user_gender,
-        user_birthday,
-        // user_password: encryptPassword,
+        user_bio,
         user_updated_at: new Date(),
-        // user_role,
-        // status
       };
       const checkId = await getUserByIdModel(id);
       if (checkId.length > 0) {

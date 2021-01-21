@@ -28,20 +28,25 @@ module.exports = {
     }
   },
   registerUser: async (request, response) => {
-    try {
-      const { user_name, user_email, user_password } = request.body;
-      const salt = bcrypt.genSaltSync(10);
-      const encryptPassword = bcrypt.hashSync(user_password, salt);
-      const setData = {
-        user_name,
-        user_email,
-        user_password: encryptPassword,
-        user_created_at: new Date(),
-      };
-      const result = await registerUserModel(setData);
-      return helper.response(response, 200, "Success Register User", result);
-    } catch (error) {
-      return helper.response(response, 400, "Bad Request", error);
+    const { user_name, user_email, user_password } = request.body;
+    const checkDataUser = await cekEmailModel(user_email);
+    if (checkDataUser.length > 0) {
+      return helper.response(response, 400, "Email already registered");
+    } else {
+      try {
+        const salt = bcrypt.genSaltSync(10);
+        const encryptPassword = bcrypt.hashSync(user_password, salt);
+        const setData = {
+          user_name,
+          user_email,
+          user_password: encryptPassword,
+          user_created_at: new Date(),
+        };
+        const result = await registerUserModel(setData);
+        return helper.response(response, 200, "Success Register User", result);
+      } catch (error) {
+        return helper.response(response, 400, "Bad Request", error);
+      }
     }
   },
   editUser: async (request, response) => {

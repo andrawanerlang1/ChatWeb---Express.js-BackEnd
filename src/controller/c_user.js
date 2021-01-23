@@ -52,24 +52,49 @@ module.exports = {
   editUser: async (request, response) => {
     try {
       const { id } = request.params;
-      const { user_name, user_email, user_number, user_bio } = request.body;
-      const setData = {
+      const {
         user_name,
         user_email,
         user_number,
         user_bio,
-        user_updated_at: new Date(),
-      };
-      const checkId = await getUserByIdModel(id);
-      if (checkId.length > 0) {
-        const result = await editUserModel(setData, id);
-        return helper.response(response, 200, "Success edit user", result);
+        user_lat,
+        user_lng,
+      } = request.body;
+      if (user_lat && user_lng) {
+        const setData = {
+          user_lat,
+          user_lng,
+        };
+        const checkId = await getUserByIdModel(id);
+        if (checkId.length > 0) {
+          const result = await editUserModel(setData, id);
+          return helper.response(response, 200, "Success edit user", result);
+        } else {
+          return helper.response(
+            response,
+            404,
+            `User with id : ${id} is not found`
+          );
+        }
       } else {
-        return helper.response(
-          response,
-          404,
-          `User with id : ${id} is not found`
-        );
+        const setData = {
+          user_name,
+          user_email,
+          user_number,
+          user_bio,
+          user_updated_at: new Date(),
+        };
+        const checkId = await getUserByIdModel(id);
+        if (checkId.length > 0) {
+          const result = await editUserModel(setData, id);
+          return helper.response(response, 200, "Success edit user", result);
+        } else {
+          return helper.response(
+            response,
+            404,
+            `User with id : ${id} is not found`
+          );
+        }
       }
     } catch (error) {
       return helper.response(response, 400, "Bad Request", error);

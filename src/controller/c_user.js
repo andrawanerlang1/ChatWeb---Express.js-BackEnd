@@ -1,10 +1,14 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const helper = require("../helper/response");
+const fs = require("fs");
+
 const {
   registerUserModel,
   cekEmailModel,
   getUserByIdModel,
+  searchUserEmailModel,
+  searchUserNumberModel,
   editUserModel,
   deleteUserModel,
 } = require("../model/user");
@@ -17,11 +21,31 @@ module.exports = {
       if (result.length > 0) {
         return helper.response(response, 200, "Success Get User By Id", result);
       } else {
-        return helper.response(
-          response,
-          404,
-          `Product By Id : ${id} Not Found`
-        );
+        return helper.response(response, 404, `User By Id : ${id} Not Found`);
+      }
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
+  searchUser: async (request, response) => {
+    try {
+      const { email, number } = request.query;
+      if (email) {
+        const result = await searchUserEmailModel(email);
+        if (result.length > 0) {
+          return helper.response(response, 200, "Success Get User", result);
+        } else {
+          return helper.response(response, 404, `User Not Found`);
+        }
+      } else if (number) {
+        result = await searchUserNumberModel(number);
+        if (result.length > 0) {
+          return helper.response(response, 200, "Success Get User", result);
+        } else {
+          return helper.response(response, 404, `User Not Found`);
+        }
+      } else {
+        return helper.response(response, 401, "No input", error);
       }
     } catch (error) {
       return helper.response(response, 400, "Bad Request", error);
@@ -100,6 +124,43 @@ module.exports = {
       return helper.response(response, 400, "Bad Request", error);
     }
   },
+  editImage: async (request, response) => {
+    try {
+      const { id } = request.params;
+      const setData = {
+        user_image: request.file === undefined ? "" : request.file.filename,
+        user_updated_at: new Date(),
+      };
+      const checkId = await getUserByIdModel(id);
+      if (checkId.length > 0) {
+        const image = checkId[0].user_image;
+        if (setData.user_image) {
+          await fs.unlink(`./uploads/user/${image}`, (err) => {
+            if (!err) {
+              console.log(
+                `successfully updated ${image} with ${setData.user_image}`
+              );
+            } else {
+              console.log("Image that would be deleted does not exist");
+            }
+          });
+        } else {
+          setData.user_image = image;
+        }
+        // proses update data
+        const result = await editUserModel(setData, id);
+        return helper.response(response, 200, "Succeed Updating User", result);
+      } else {
+        return helper.response(
+          response,
+          404,
+          `User with id : ${id} is not found`
+        );
+      }
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
   editPassword: async (request, response) => {
     try {
       const { id } = request.params;
@@ -147,7 +208,7 @@ module.exports = {
         return helper.response(
           response,
           404,
-          `Product with id : ${id} is not found`
+          `User with id : ${id} is not found`
         );
       }
     } catch (error) {

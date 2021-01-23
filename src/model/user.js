@@ -4,7 +4,6 @@ module.exports = {
   registerUserModel: (setData) => {
     return new Promise((resolve, reject) => {
       connection.query("INSERT INTO user SET ?", setData, (error, result) => {
-        console.log(error);
         if (!error) {
           const newResult = {
             user_id: result.insertId,
@@ -23,6 +22,28 @@ module.exports = {
       connection.query(
         "SELECT * FROM user WHERE user_id = ? ",
         id,
+        (error, result) => {
+          !error ? resolve(result) : reject(new Error(error));
+        }
+      );
+    });
+  },
+  searchUserEmailModel: (input) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM user WHERE user_email = ?",
+        input,
+        (error, result) => {
+          !error ? resolve(result) : reject(new Error(error));
+        }
+      );
+    });
+  },
+  searchUserNumberModel: (input) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT * FROM user WHERE user_number = ?",
+        input,
         (error, result) => {
           !error ? resolve(result) : reject(new Error(error));
         }

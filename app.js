@@ -9,6 +9,8 @@ const socket = require("socket.io");
 
 const app = express();
 app.use(cors());
+app.use(morgan("dev"));
+app.use(express.static("uploads"));
 
 // ==============================
 const http = require("http");
@@ -78,10 +80,12 @@ io.on("connection", (socket) => {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(morgan("dev"));
 
 app.use("/", routerNavigation);
+app.get("*", (request, response) => {
+  response.status(404).send("Path Not Found");
+});
 
-server.listen(3000, () => {
-  console.log("Listening on Port 3000");
+server.listen(process.env.port, () => {
+  console.log(`Listening on Port  ${process.env.port}`);
 });

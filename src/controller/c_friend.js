@@ -5,6 +5,8 @@ const fs = require("fs");
 
 const {
   addFriendModel,
+  acceptFriendModel,
+  getFriendModel,
   cekFriendStatusModel,
   getFriendRequestModel,
 } = require("../model/friend");
@@ -45,6 +47,24 @@ module.exports = {
         "Here is your friend request",
         result
       );
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
+  getFriends: async (request, response) => {
+    const { id } = request.params;
+    try {
+      const result = await getFriendModel(id);
+      return helper.response(response, 200, "Here is your friend list", result);
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
+  acceptFriendRequest: async (request, response) => {
+    const { user_id, friend_id } = request.body;
+    try {
+      const result = await acceptFriendModel(user_id, friend_id);
+      return helper.response(response, 200, "Friend Request Accepted", result);
     } catch (error) {
       return helper.response(response, 400, "Bad Request", error);
     }

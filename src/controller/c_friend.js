@@ -31,6 +31,7 @@ module.exports = {
           status: 0,
         };
         const result = await addFriendModel(setData);
+        console.log(result);
         return helper.response(response, 200, "Friend Invitation Sent", result);
       } catch (error) {
         return helper.response(response, 400, "Bad Request", error);

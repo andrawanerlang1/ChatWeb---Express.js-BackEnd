@@ -3,7 +3,11 @@
 const helper = require("../helper/response");
 // const fs = require("fs");
 
-const { createRoomModel, checkRoomModel } = require("../model/chat");
+const {
+  createRoomModel,
+  checkRoomModel,
+  getRoomModel,
+} = require("../model/chat");
 
 module.exports = {
   createRoom: async (request, response) => {
@@ -27,6 +31,20 @@ module.exports = {
       } catch (error) {
         return helper.response(response, 400, "Bad Request", error);
       }
+    }
+  },
+  getRoom: async (request, response) => {
+    const { id } = request.params;
+    try {
+      const result = await getRoomModel(id);
+      return helper.response(
+        response,
+        200,
+        "Here is your chat room list",
+        result
+      );
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
     }
   },
 };

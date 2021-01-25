@@ -22,10 +22,6 @@ const io = socket(server, {
 });
 io.on("connection", (socket) => {
   console.log("Socket.io Connect !");
-  // global Message = pesan yang di kirimkan ke semua client
-  // private Message = pesan yang hanya dikirimkan ke client saja
-  // broadcast Message = pesan yang di kirimkan ke semua client kecuali si pengirim
-  // room = ruangan pesan yang bisa di akses/ dimasuki client
   socket.on("globalMessage", (data) => {
     console.log("globalMessage ");
     console.log(data);
@@ -69,10 +65,10 @@ io.on("connection", (socket) => {
   socket.on("roomMessage", (data) => {
     console.log("roomMessage ");
     console.log(data);
-
     io.to(data.room).emit("chatMessage", data);
   });
   socket.on("typing", (data) => {
+    console.log(data);
     socket.broadcast.to(data.room).emit("typingMessage", data);
   });
 });

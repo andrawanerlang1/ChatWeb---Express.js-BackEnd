@@ -9,6 +9,7 @@ const {
   getFriendModel,
   cekFriendStatusModel,
   getFriendRequestModel,
+  deleteFriendModel,
 } = require("../model/friend");
 
 module.exports = {
@@ -66,6 +67,16 @@ module.exports = {
     try {
       const result = await acceptFriendModel(user_id, friend_id);
       return helper.response(response, 200, "Friend Request Accepted", result);
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
+  deleteFriend: async (request, response) => {
+    const { user_id, friend_id } = request.query;
+    try {
+      const result1 = await deleteFriendModel(user_id, friend_id);
+      const result2 = await deleteFriendModel(friend_id, user_id);
+      return helper.response(response, 200, "Friend deleted", result1);
     } catch (error) {
       return helper.response(response, 400, "Bad Request", error);
     }

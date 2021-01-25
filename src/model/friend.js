@@ -42,6 +42,26 @@ module.exports = {
       );
     });
   },
+  deleteFriendModel: (user_id, friend_id) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `DELETE from friendlist WHERE user_id = ${user_id} AND friend_id = ${friend_id}`,
+        (error, result) => {
+          console.log(result);
+          const newResult = {
+            user_id,
+            friend_id
+          };
+          if (!error) {
+            resolve(newResult);
+          } else {
+            console.log(error);
+            reject(new Error(error));
+          }
+        }
+      );
+    });
+  },
   cekFriendStatusModel: (a, b) => {
     return new Promise((resolve, reject) => {
       connection.query(

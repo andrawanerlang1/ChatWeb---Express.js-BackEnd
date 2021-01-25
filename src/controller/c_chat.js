@@ -7,6 +7,8 @@ const {
   createRoomModel,
   checkRoomModel,
   getRoomModel,
+  sendMessageModel,
+  getMessageModel,
 } = require("../model/chat");
 
 module.exports = {
@@ -41,6 +43,35 @@ module.exports = {
         response,
         200,
         "Here is your chat room list",
+        result
+      );
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
+  sendMessage: async (request, response) => {
+    const { room_id, sender, receiver, message } = request.body;
+    const setData = {
+      room_id,
+      sender,
+      receiver,
+      message,
+    };
+    try {
+      const result = await sendMessageModel(setData);
+      return helper.response(response, 200, "Message Sent", result);
+    } catch (error) {
+      return helper.response(response, 400, "Bad Request", error);
+    }
+  },
+  getMessage: async (request, response) => {
+    const { id } = request.params;
+    try {
+      const result = await getMessageModel(id);
+      return helper.response(
+        response,
+        200,
+        "Here is your message history",
         result
       );
     } catch (error) {

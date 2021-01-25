@@ -40,4 +40,31 @@ module.exports = {
       );
     });
   },
+  sendMessageModel: (setData) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        "INSERT INTO message SET ?",
+        setData,
+        (error, result) => {
+          !error ? resolve((result = setData)) : reject(new Error(error));
+        }
+      );
+    });
+  },
+  getMessageModel: (user_id) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        "SELECT room_id, user.user_id, user.user_name , message ,user.user_image FROM message RIGHT JOIN user ON user.user_id = sender WHERE room_id = ?",
+        [user_id],
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            console.log(error);
+            reject(new Error(error));
+          }
+        }
+      );
+    });
+  },
 };

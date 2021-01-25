@@ -25,7 +25,6 @@ io.on("connection", (socket) => {
   socket.on("globalMessage", (data) => {
     console.log("globalMessage ");
     console.log(data);
-
     io.emit("chatMessage", data);
   });
   socket.on("privateMessage", (data) => {
@@ -45,10 +44,10 @@ io.on("connection", (socket) => {
     console.log(data);
 
     socket.join(data.room);
-    socket.broadcast.to(data.room).emit("chatMessage", {
-      username: "BOT",
-      message: `${data.username} Joined Chat !`,
-    });
+    // socket.broadcast.to(data.room).emit("chatMessage", {
+    //   username: "BOT",
+    //   message: `${data.username} Joined Chat !`,
+    // });
   });
   socket.on("changeRoom", (data) => {
     console.log("changeRoom ");
@@ -56,10 +55,10 @@ io.on("connection", (socket) => {
 
     socket.leave(data.oldRoom);
     socket.join(data.room);
-    socket.broadcast.to(data.room).emit("chatMessage", {
-      username: "BOT",
-      message: `${data.username} Joined Chat !`,
-    });
+    // socket.broadcast.to(data.room).emit("chatMessage", {
+    //   username: "BOT",
+    //   message: `${data.username} Joined Chat !`,
+    // });
   });
   // =
   socket.on("roomMessage", (data) => {

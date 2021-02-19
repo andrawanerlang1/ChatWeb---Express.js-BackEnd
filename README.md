@@ -25,7 +25,7 @@ This project is created for handling user interaction with database, expecially 
 5. Create a database with the name #coffee_shop, and Import file sql to **phpmyadmin**
 6. Open Postman desktop application or Chrome web app extension that has installed before
 7. Choose HTTP Method and enter request url.(ex. localhost:3000/)
-8. You can see all the end point [here](https://documenter.getpostman.com/view/13455063/TVsoGVft)
+8. You can see all the end point [here](https://documenter.getpostman.com/view/13455063/TW6upV2G)
 
 ## Set up .env file
 
@@ -39,5 +39,6 @@ database = coffee_shop
 port = 3000
 ```
 
-## PostMan Documentation
-https://documenter.getpostman.com/view/13455063/TW6upV2G
+## License
+
+© [Andrawan Erlang](https://github.com/andrawanerlang1/)

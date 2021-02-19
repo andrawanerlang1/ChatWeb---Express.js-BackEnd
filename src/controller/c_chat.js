@@ -9,6 +9,7 @@ const {
   getRoomModel,
   sendMessageModel,
   getMessageModel,
+  getLastMessageModel,
 } = require("../model/chat");
 
 module.exports = {
@@ -39,11 +40,25 @@ module.exports = {
     const { id } = request.params;
     try {
       const result = await getRoomModel(id);
+      console.log(result[0].room_id);
+      let arrResult = [];
+      for (let i = 0; i < result.length; i++) {
+        let result2 = await getLastMessageModel(result[i].room_id);
+        if (!result2[0]) {
+          result2[0] = { message: "", created_at: "" };
+        }
+        const result3 = {
+          ...result[i],
+          message: result2[0].message,
+          created_at: result2[0].created_at,
+        };
+        arrResult.push(result3);
+      }
       return helper.response(
         response,
         200,
         "Here is your chat room list",
-        result
+        arrResult
       );
     } catch (error) {
       return helper.response(response, 400, "Bad Request", error);

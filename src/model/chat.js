@@ -40,6 +40,21 @@ module.exports = {
       );
     });
   },
+  getLastMessageModel: (room_id) => {
+    return new Promise((resolve, reject) => {
+      connection.query(
+        `SELECT message, created_at FROM message WHERE room_id = ${room_id} ORDER BY created_at DESC LIMIT 1`,
+        (error, result) => {
+          if (!error) {
+            resolve(result);
+          } else {
+            console.log(error);
+            reject(new Error(error));
+          }
+        }
+      );
+    });
+  },
   sendMessageModel: (setData) => {
     return new Promise((resolve, reject) => {
       connection.query(

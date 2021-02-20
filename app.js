@@ -8,7 +8,7 @@ const socket = require("socket.io");
 const app = express();
 app.use(cors());
 app.use(morgan("dev"));
-app.use(express.static("uploads"));
+app.use("/api3/fileUploadsApi3", express.static("uploads"));
 
 const http = require("http");
 const server = http.createServer(app);
@@ -66,11 +66,11 @@ io.on("connection", (socket) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-app.use("/", routerNavigation);
+app.use("/api3", routerNavigation);
 app.get("*", (request, response) => {
   response.status(404).send("Path Not Found");
 });
 
 server.listen(process.env.port, () => {
-  console.log(`Listening on Port  ${process.env.port}`);
+  console.log(`Server is Listening on Port  ${process.env.port}`);
 });

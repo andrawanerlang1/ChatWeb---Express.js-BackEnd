@@ -42,25 +42,19 @@ io.on("connection", (socket) => {
   socket.on("joinRoom", (data) => {
     console.log("joinRoom ");
     console.log(data);
-
     socket.join(data.room);
-    // socket.broadcast.to(data.room).emit("chatMessage", {
-    //   username: "BOT",
-    //   message: `${data.username} Joined Chat !`,
-    // });
   });
   socket.on("changeRoom", (data) => {
     console.log("changeRoom ");
     console.log(data);
-
     socket.leave(data.oldRoom);
     socket.join(data.room);
-    // socket.broadcast.to(data.room).emit("chatMessage", {
-    //   username: "BOT",
-    //   message: `${data.username} Joined Chat !`,
-    // });
   });
-  // =
+  socket.on("leaveRoom", (data) => {
+    console.log("leaveRoom ");
+    console.log(data);
+    socket.leave(data.room);
+  });
   socket.on("roomMessage", (data) => {
     console.log("roomMessage ");
     console.log(data);

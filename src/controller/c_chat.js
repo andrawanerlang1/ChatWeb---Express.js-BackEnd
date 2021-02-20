@@ -40,7 +40,6 @@ module.exports = {
     const { id } = request.params;
     try {
       const result = await getRoomModel(id);
-      console.log(result[0].room_id);
       let arrResult = [];
       for (let i = 0; i < result.length; i++) {
         let result2 = await getLastMessageModel(result[i].room_id);

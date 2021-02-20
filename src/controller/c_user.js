@@ -147,7 +147,6 @@ module.exports = {
         } else {
           setData.user_image = image;
         }
-        // proses update data
         const result = await editUserModel(setData, id);
         return helper.response(response, 200, "Succeed Updating User", result);
       } else {

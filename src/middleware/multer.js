@@ -1,6 +1,5 @@
 const multer = require("multer");
 const helper = require("../helper/response");
-// ========================================================================================
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "./uploads/user");
@@ -10,7 +9,6 @@ const storage = multer.diskStorage({
     cb(null, new Date().toISOString().replace(/:/g, "-") + file.originalname);
   },
 });
-// =========================================================================================
 const fileFilter = (req, file, cb) => {
   if (
     file.mimetype === "image/png" ||
@@ -28,7 +26,6 @@ const upload = multer({
   limits: { fileSize: maxSize },
   fileFilter,
 }).single("user_image");
-// =========================================================================================
 const uploadFilter = (req, res, next) => {
   upload(req, res, function (err) {
     if (err instanceof multer.MulterError) {

@@ -3,16 +3,13 @@ const bodyParser = require("body-parser");
 const morgan = require("morgan");
 const cors = require("cors");
 const routerNavigation = require("./src/routesNavigation");
-// ==============================
 const socket = require("socket.io");
-// ==============================
 
 const app = express();
 app.use(cors());
 app.use(morgan("dev"));
 app.use(express.static("uploads"));
 
-// ==============================
 const http = require("http");
 const server = http.createServer(app);
 const io = socket(server, {
@@ -65,7 +62,6 @@ io.on("connection", (socket) => {
     socket.broadcast.to(data.room).emit("typingMessage", data);
   });
 });
-// ==============================
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));

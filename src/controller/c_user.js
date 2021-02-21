@@ -69,6 +69,7 @@ module.exports = {
         const result = await registerUserModel(setData);
         return helper.response(response, 200, "Success Register User", result);
       } catch (error) {
+        console.log(error);
         return helper.response(response, 400, "Bad Request", error);
       }
     }

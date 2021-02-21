@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 20 Feb 2021 pada 01.28
+-- Waktu pembuatan: 21 Feb 2021 pada 18.30
 -- Versi server: 10.4.14-MariaDB
 -- Versi PHP: 7.2.34
 
@@ -63,20 +63,11 @@ CREATE TABLE `message` (
 --
 
 INSERT INTO `message` (`message_id`, `room_id`, `sender`, `receiver`, `message`, `created_at`) VALUES
-(167, 765151, 1, 3, '1', '2021-02-20 04:53:23'),
-(168, 765151, 3, 1, '2', '2021-02-20 04:53:25'),
-(169, 765151, 1, 3, '3', '2021-02-20 04:53:27'),
-(170, 765151, 3, 1, '4', '2021-02-20 04:53:29'),
-(171, 765151, 3, 1, '123', '2021-02-20 04:53:47'),
-(172, 765151, 1, 3, 'hello there rudy', '2021-02-20 06:12:20'),
-(173, 765151, 1, 3, 'what are u up to?', '2021-02-20 06:12:26'),
-(174, 765151, 3, 1, 'hello andra', '2021-02-20 06:12:36'),
-(175, 765151, 3, 1, 'im doing homework', '2021-02-20 06:12:41'),
-(176, 765151, 1, 3, 'wow thats nice', '2021-02-20 06:12:49'),
-(177, 765151, 3, 1, 'thankyou', '2021-02-20 06:12:52'),
-(178, 765151, 3, 1, 'are you free tommorow?', '2021-02-20 06:13:40'),
-(179, 765151, 1, 3, 'yeah i am, whats up?????', '2021-02-20 06:13:56'),
-(180, 765151, 1, 3, 'asd', '2021-02-20 07:19:46');
+(318, 765151, 1, 3, 'tes 1', '2021-02-20 18:04:20'),
+(319, 765151, 1, 3, 'a', '2021-02-20 18:04:47'),
+(320, 765151, 1, 3, '123', '2021-02-20 18:08:08'),
+(321, 765151, 3, 1, 'iya', '2021-02-20 18:08:28'),
+(322, 765151, 3, 1, 'heheeheheh', '2021-02-20 18:08:48');
 
 -- --------------------------------------------------------
 
@@ -109,16 +100,16 @@ INSERT INTO `room` (`room_id_uniq`, `room_id`, `user_a`, `user_b`, `created_at`,
 
 CREATE TABLE `user` (
   `user_id` int(11) NOT NULL,
-  `user_email` varchar(100) NOT NULL,
-  `user_name` varchar(100) NOT NULL,
-  `user_password` varchar(100) NOT NULL,
+  `user_email` varchar(100) DEFAULT NULL,
+  `user_name` varchar(100) DEFAULT NULL,
+  `user_password` varchar(100) DEFAULT NULL,
   `user_image` varchar(100) DEFAULT NULL,
   `user_number` varchar(16) DEFAULT NULL,
   `user_lat` decimal(9,8) DEFAULT NULL,
   `user_lng` decimal(9,6) DEFAULT NULL,
   `user_bio` varchar(300) DEFAULT NULL,
   `user_created_at` datetime NOT NULL DEFAULT current_timestamp(),
-  `user_updated_at` datetime NOT NULL,
+  `user_updated_at` datetime DEFAULT current_timestamp(),
   `user_status` int(11) NOT NULL DEFAULT 1
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -133,7 +124,9 @@ INSERT INTO `user` (`user_id`, `user_email`, `user_name`, `user_password`, `user
 (5, 'andra@1', 'Andra 1', '$2b$10$JJZvHnd4QbCfXy.6f.28sO8mkoEhgwwP2B9RKiWlbGREP/MFZ72x2', '2021-01-23T17-08-10.588Z1600265022806_357490867_2.jpg', '1', '-6.23999950', '107.065767', 'i am andra one', '2021-01-23 17:06:27', '2021-01-23 17:08:10', 1),
 (6, 'andra@2', 'Andra 2', '$2b$10$GI3RLSjoHlmk3RQsAc.qRuxqZ0t/5a2htBGJ4R/kC0TWeAjf.J9WC', '2021-01-23T17-08-45.911Z51oW-Q2unWL._AC_SL1000_.jpg', '2', '-6.23999950', '107.065767', 'i am andra two', '2021-01-23 17:06:38', '2021-01-23 17:08:59', 1),
 (7, 'andra@4', 'Andra 3', '$2b$10$JXzRoQ/tZu6kMAaYXg6Yxu7OOdD9vEjF6JjIN0U2i/eZsaZPb6.gy', '', '', '0.00000000', '0.000000', '', '2021-01-23 17:06:45', '0000-00-00 00:00:00', 1),
-(8, 'a@a', 'a', '$2b$10$k4Mc1kim0ET//LH.ab96DOJd2X/nSVrYbYMcMMWHM87yPtQ7iqx0e', '', '', '-6.23999950', '107.065767', '', '2021-02-20 00:27:15', '0000-00-00 00:00:00', 1);
+(8, 'a@a', 'a', '$2b$10$k4Mc1kim0ET//LH.ab96DOJd2X/nSVrYbYMcMMWHM87yPtQ7iqx0e', '', '', '-6.23999950', '107.065767', '', '2021-02-20 00:27:15', '0000-00-00 00:00:00', 1),
+(9, '123@123', 'aasdw', '$2b$10$TD.Yzl9u7nmswLS47pEU9OBV/d6J9HWiP3I/XACTgWXpD2Iy66CMi', NULL, NULL, NULL, NULL, NULL, '2021-02-21 17:11:08', '0000-00-00 00:00:00', 1),
+(10, '321@312', '123', '$2b$10$vTkDOLBa3aqnfgO3PQ.gjOcEut0/gYt9yS8y8A7rbqfI3Ix.uID96', NULL, NULL, NULL, NULL, NULL, '2021-02-21 17:13:41', '0000-00-00 00:00:00', 1);
 
 --
 -- Indexes for dumped tables
@@ -177,7 +170,7 @@ ALTER TABLE `friendlist`
 -- AUTO_INCREMENT untuk tabel `message`
 --
 ALTER TABLE `message`
-  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=181;
+  MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=323;
 
 --
 -- AUTO_INCREMENT untuk tabel `room`
@@ -189,7 +182,7 @@ ALTER TABLE `room`
 -- AUTO_INCREMENT untuk tabel `user`
 --
 ALTER TABLE `user`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

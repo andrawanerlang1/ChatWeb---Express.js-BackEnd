@@ -16,6 +16,7 @@ const io = socket(server, {
   cors: {
     origin: "*",
   },
+  path: "/api3/socket.io",
 });
 io.on("connection", (socket) => {
   console.log("Socket.io Connect !");
